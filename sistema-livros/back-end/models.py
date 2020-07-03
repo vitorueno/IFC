@@ -13,7 +13,7 @@ class Book(db.Model):
     
     # expressao da classe no formato json
     def json(self):
-        return json.dumps({
+        return ({
             "id": self.id,
             "title": self.title,
             "author": self.author,

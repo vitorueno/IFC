@@ -1,6 +1,6 @@
 import os
 from models import Book
-from config import *
+from config import db
 
 
 if __name__ == '__main__':
