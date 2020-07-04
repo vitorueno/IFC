@@ -12,14 +12,14 @@ def get_books():
 
 @app.route('/create-books', methods=['post'])
 def create_book():
-    response = jsonify({"status: 201", "result:": "ok", "details": "Book created"})
+    response = jsonify({"status: 201", "result: ok", "details": "Book created"})
     data = request.get_json()
     try:
         new_book = Book(**data)
         db.session.add(new_book)
         db.session.commit()
     except Exception as e:
-        response = jsonify({"status: 400", "result:": "error", "details": str(e)})
+        response = jsonify({"status: 400", "result: error", "details": str(e)})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response 
 
