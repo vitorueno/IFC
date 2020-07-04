@@ -1,6 +1,6 @@
 import os
 from models import Book
-from config import db
+from config import db, db_file
 
 
 if __name__ == '__main__':
@@ -11,8 +11,17 @@ if __name__ == '__main__':
     db.create_all()
 
     # creating test instances
-    book1 = Book(title='The Hobbit', author='J. R. R. Tolkien', description='The adventures of Bilbo')
-    book2 = Book(title='Harry Potter', author='J. K. Rowling', description='A book about magic')
+    book1 = Book(title='The Hobbit',
+                author='J. R. R. Tolkien',
+                description='The adventures of Bilbo',
+                genre='adventure',
+                publisher='Allen & Unwin')
+    
+    book2 = Book(title='Harry Potter', 
+                author='J. K. Rowling',
+                description='A book about magic',
+                genre='fantasy',
+                publisher='Bloomsbury Publishing')
     
     # commiting tests
     db.session.add(book1)
