@@ -12,7 +12,7 @@ def get_books():
 
 @app.route('/create-books', methods=['POST'])
 def create_book():
-    response = jsonify({"status": "201", "result": "ok", "details": "Book created"})
+    response = jsonify({"status": "200", "result": "ok", "details": "Book created"})
     data = request.get_json()
     try:
         new_book = Book(**data)
@@ -30,7 +30,7 @@ def delete_books(id):
         Book.query.filter(Book.id == id).delete()
         db.session.commit()
     except Exception as e:
-        resposta = jsonify({"status": "400" ,"result": "error", "details": str(e)})
+        resposta = jsonify({"status": "400" , "result": "error", "details": str(e)})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
     

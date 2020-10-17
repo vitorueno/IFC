@@ -2,7 +2,7 @@ from config import *
 
 
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(254))
     author = db.Column(db.String(254))
     description = db.Column(db.String(254))
