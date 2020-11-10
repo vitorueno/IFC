@@ -11,13 +11,12 @@ class Book(db.Model):
 
     def __str__(self):
         return f'''
-                - Book({self.id}) 
-                - title: {self.title} 
-                - author: {self.author} 
-                - description: {self.description}
-                - genre: {self.genre}
-                - publisher: {self.publisher}
-                '''
+                    - Book({self.id}) 
+                    - title: {self.title} 
+                    - author: {self.author} 
+                    - description: {self.description}
+                    - genre: {self.genre}
+                    - publisher: {self.publisher}'''
     
     # expressao da classe no formato json
     def json(self):
@@ -30,3 +29,65 @@ class Book(db.Model):
             "publisher": self.publisher
         })
 
+
+class Reader(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(254))
+    age = db.Column(db.String(254))
+    profession = db.Column(db.String(254))
+    fav_book_id = db.Column(db.Integer, db.ForeignKey(Book.id))
+    fav_book = db.relationship("Book")
+
+    def __str__(self):
+        s = f'''
+                * Reader({self.id})
+                * name: {self.name}
+                * age: {self.age}
+                * profession: {self.profession}'''
+        if self.fav_book is not None:
+            s += f'''
+                * favorite book: {self.fav_book}'''
+        return s
+
+    def json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "age": self.age,
+            "profession": self.profession,
+            "fav_book_id": self.fav_book_id,
+            "fav_book": self.fav_book.json()
+        }
+
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.String(254))
+    date = db.Column(db.String(254))
+    opinion = db.Column(db.String(254))
+    book_id = db.Column(db.Integer, db.ForeignKey(Book.id))
+    book = db.relationship("Book")
+    autor_id = db.Column(db.Integer, db.ForeignKey(Reader.id))
+    author = db.relationship("Reader")
+
+    def __str__(self):
+        return f'''
+        # Review({self.id})
+        # rating: {self.rating}
+        # date: {self.date}
+        # opinion: {self.opinion}
+        # book reviewed: {self.book}
+        # wrote by: {self.author}
+        '''
+        
+    def json(self):
+        return {
+            "id": self.id,
+            "rating": self.rating,
+            "date": self.date,
+            "opinion": self.opinion,
+            "book_id": self.book_id,
+            "book": self.book.json(),
+            "author_id": self.autor_id,
+            "author": self.author.json()
+        }
