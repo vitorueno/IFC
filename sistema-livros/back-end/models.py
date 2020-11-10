@@ -50,13 +50,19 @@ class Reader(db.Model):
         return s
 
     def json(self):
+        if self.fav_book is None:
+            book_id = ''
+            book = ''
+        else: 
+            book_id = self.fav_book_id
+            book = self.fav_book.json()
         return {
             "id": self.id,
             "name": self.name,
             "age": self.age,
             "profession": self.profession,
-            "fav_book_id": self.fav_book_id,
-            "fav_book": self.fav_book.json()
+            "fav_book_id": book_id,
+            "fav_book": book
         }
 
 
@@ -65,9 +71,9 @@ class Review(db.Model):
     rating = db.Column(db.String(254))
     date = db.Column(db.String(254))
     opinion = db.Column(db.String(254))
-    book_id = db.Column(db.Integer, db.ForeignKey(Book.id))
+    book_id = db.Column(db.Integer, db.ForeignKey(Book.id), nullable=False)
     book = db.relationship("Book")
-    autor_id = db.Column(db.Integer, db.ForeignKey(Reader.id))
+    autor_id = db.Column(db.Integer, db.ForeignKey(Reader.id), nullable=False)
     author = db.relationship("Reader")
 
     def __str__(self):

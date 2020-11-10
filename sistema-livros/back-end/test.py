@@ -43,11 +43,18 @@ if __name__ == '__main__':
                     profession = 'Estudante', 
                     fav_book = book1)
 
+    reader2 = Reader(name ='Carlos',
+                    age = '20', 
+                    profession = 'Desempregado')
+    
     db.session.add(reader)
+    db.session.add(reader2)
     db.session.commit()
     
     print(reader,'\n')
+    print(reader2,'\n')
     print(reader.json())
+    
 
     print('='*140,'\n')
 
@@ -64,3 +71,4 @@ if __name__ == '__main__':
     print(review,'\n')
     print(review.json())
     
+    print(f'\n{review.author.name} está avaliando o livro {review.book.title}')
