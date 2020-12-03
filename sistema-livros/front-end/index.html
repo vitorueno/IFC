@@ -25,27 +25,37 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" id="link-inicial">Página Inicial</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="link-listar">Listar livros</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Cadastros
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#" id="link-listar-livro">Livros</a>
+                        <a class="dropdown-item" href="#" id="link-listar-leitor">Leitor</a>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#modal-incluir" href="#">Adicionar livro</a>
+                    <a class="nav-link" id="link-listar-resenha" href="#">Resenhas realizadas</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <main id="principal">
-
         <!-- Initial page  -->
-        <div id="inicio" class="invisible">
+        <div id="inicio">
             <div class="container pt-5">
                 <h2>Bem vindo ao cadastro de Livros.</h2>
             </div>
         </div>
 
-        <div class="container">
-            <table class="table table-striped invisible table-hover" id="book-table">
+        <!-- conteúdo do livro -->
+        <div class="container d-none" id="conteudo-livro">
+            <h2 class="h5">Cadastro de Livros</h2>
+            <a class="nav-item nav-link" data-toggle="modal" data-target="#modal-incluir-livro" href="#">
+                <span class="material-icons">add_box</span>
+            </a>
+            <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Título</th>
@@ -56,12 +66,12 @@
                         <th scope="col">Operações</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="livro-corpo-tabela"></tbody>
             </table>
         </div>
 
-        <!-- Add book modal -->
-        <div class="modal fade" id="modal-incluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- modal do livro -->
+        <div class="modal fade" id="modal-incluir-livro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -101,7 +111,148 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-incluir" type="button" class="btn btn-primary">Incluir</button>
+                        <button id="btn-incluir-livro" type="button" class="btn btn-primary">Incluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- conteúdo do leitor -->
+        <div class="container d-none" id="conteudo-leitor">
+            <h2 class="h5">Cadastro de Leitor</h2>
+            <a class="nav-item nav-link" data-toggle="modal" data-target="#modal-incluir-leitor" href="#">
+                <span class="material-icons">add_box</span>
+            </a>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Idade</th>
+                        <th scope="col">Profissão</th>
+                        <th scope="col">Nome Livro Favorito</th>
+                        <th scope="col">Operações</th>
+                    </tr>
+                </thead>
+                <tbody id="leitor-corpo-tabela"></tbody>
+            </table>
+        </div>
+
+        <!-- modal do leitor -->
+        <div class="modal fade" id="modal-incluir-leitor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Incluir Leitor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="campo-nome">Nome</label>
+                                <input type="text" class="form-control" id="campo-nome" aria-describedby="nomeHelp" placeholder="Nome">
+                                <small id="nomeHelp" class="form-text text-muted">Informe o nome do leitor.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-idade">Idade</label>
+                                <input type="text" class="form-control" id="campo-idade" aria-describedby="idadeHelp" placeholder="Idade">
+                                <small id="idadeHelp" class="form-text text-muted">Informe a idade do leitor</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-profissao">Profissão</label>
+                                <input type="text" class="form-control" id="campo-profissao" aria-describedby="profissaoHelp" placeholder="Profissão">
+                                <small id="profissaoHelp" class="form-text text-muted">Profissão do leitor</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-fav-livro">Livro Favorito</label>
+                                <select class="form-control" id="campo-fav-livro" aria-describedby="favLivroHelp" placeholder="Livro">
+                                <!-- opções serão preenchidas via javascript -->
+                                </select>
+                                <img id="loading-campo-fav-livro" src="img/loading.gif" width="20" class="img-fluid d-none" alt="Carregando">
+                                <small id="favLivroHelp" class="form-text text-muted">Selecione o livro favorito do leitor</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button id="btn-incluir-leitor" type="button" class="btn btn-primary">Incluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- conteúdo da Resenha -->
+        <div class="container d-none" id="conteudo-resenha">
+            <h2 class="h5">Resenhas</h2>
+            <a class="nav-item nav-link" data-toggle="modal" data-target="#modal-incluir-resenha" href="#">
+                <span class="material-icons">add_box</span>
+            </a>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nome do livro</th>
+                        <th scope="col">Nome do resenhista</th>
+                        <th scope="col">Opinião</th>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Operações</th>
+                    </tr>
+                </thead>
+                <tbody id="resenha-corpo-tabela"></tbody>
+            </table>
+        </div>
+
+        <!-- modal da resenha -->
+        <div class="modal fade" id="modal-incluir-resenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Incluir Resenha</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="campo-leitor">Autor</label>
+                                <select class="form-control" id="campo-leitor" aria-describedby="leitorHelp" placeholder="Leitor">
+                                <!-- opções serão preenchidas via javascript -->
+                                </select>
+                                <img id="loading-campo-leitor" src="img/loading.gif" width="20" class="img-fluid d-none" alt="Carregando">
+                                <small id="leitorHelp" class="form-text text-muted">Selecione o autor da resenha</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="campo-livro">Livro</label>
+                                <select class="form-control" id="campo-livro" aria-describedby="livroHelp" placeholder="Livro">
+                                <!-- opções serão preenchidas via javascript -->
+                                </select>
+                                <img id="loading-campo-livro" src="img/loading.gif" width="20" class="img-fluid d-none" alt="Carregando">
+                                <small id="livroHelp" class="form-text text-muted">Selecione o livro da resenha</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-data">Data</label>
+                                <input type="date" class="form-control" id="campo-data" aria-describedby="dataHelp" placeholder="Data">
+                                <small id="dataHelp" class="form-text text-muted">Informe a data da resenha.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-opiniao">Opinião</label>
+                                <input type="text" class="form-control" id="campo-opiniao" aria-describedby="opiniaoHelp" placeholder="Opinião">
+                                <small id="opiniaoHelp" class="form-text text-muted">Digite a opinião do autor sobre o livro</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="campo-nota">Nota</label>
+                                <input type="text" class="form-control" id="campo-nota" aria-describedby="notaHelp" placeholder="Nota">
+                                <small id="notaHelp" class="form-text text-muted">Digite a nota do livro de 0 a 10.</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button id="btn-incluir-resenha" type="button" class="btn btn-primary">Incluir</button>
                     </div>
                 </div>
             </div>

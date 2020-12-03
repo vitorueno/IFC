@@ -64,7 +64,7 @@ class Reader(db.Model):
             "fav_book_id": book_id,
             "fav_book": book
         }
-
+ 
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,7 +73,7 @@ class Review(db.Model):
     opinion = db.Column(db.String(254))
     book_id = db.Column(db.Integer, db.ForeignKey(Book.id), nullable=False)
     book = db.relationship("Book")
-    autor_id = db.Column(db.Integer, db.ForeignKey(Reader.id), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey(Reader.id), nullable=False)
     author = db.relationship("Reader")
 
     def __str__(self):
@@ -94,6 +94,6 @@ class Review(db.Model):
             "opinion": self.opinion,
             "book_id": self.book_id,
             "book": self.book.json(),
-            "author_id": self.autor_id,
+            "author_id": self.author_id,
             "author": self.author.json()
         }
